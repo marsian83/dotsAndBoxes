@@ -355,15 +355,18 @@ class Game:
         self.screen.fill(self.back_color)
         self.fuente = pygame.font.Font(None, self.box_size[0])
         self.fuente2 = pygame.font.Font(None, self.box_size[0] * 2)
-        self.draw_grid()
-        run = True
-        while run:
+        self.draw_grid() 
+        self.running = True
+        while self.running:
             while Gtk.events_pending():
                 Gtk.main_iteration()
+                
+            if not self.running:
+                break
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    run = False
+                    self.running = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     pos = event.pos
                     ret = self.where(pos)
@@ -381,6 +384,8 @@ class Game:
                 while run2:
                     while Gtk.events_pending():
                         Gtk.main_iteration()
+                    if not self.running:
+                        break
 
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
